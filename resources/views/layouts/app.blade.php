@@ -379,15 +379,15 @@
             });
 
             // 3D tilt effect for glass elements
-            const glassElements = document.querySelectorAll('.glass');
-            document.addEventListener('mousemove', (e) => {
-                const xAxis = (window.innerWidth / 2 - e.pageX) / 25;
-                const yAxis = (window.innerHeight / 2 - e.pageY) / 25;
-
-                glassElements.forEach(glass => {
-                    glass.style.transform = `rotateY(${xAxis}deg) rotateX(${yAxis}deg)`;
-                });
-            });
+            // const glassElements = document.querySelectorAll('.glass');
+            // document.addEventListener('mousemove', (e) => {
+            //     const xAxis = (window.innerWidth / 2 - e.pageX) / 25;
+            //     const yAxis = (window.innerHeight / 2 - e.pageY) / 25;
+            //
+            //     glassElements.forEach(glass => {
+            //         glass.style.transform = `rotateY(${xAxis}deg) rotateX(${yAxis}deg)`;
+            //     });
+            // });
 
             // Reset position when mouse leaves
             document.addEventListener('mouseleave', () => {
