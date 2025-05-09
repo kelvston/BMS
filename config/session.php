@@ -18,8 +18,10 @@ return [
     |
     */
 
-    'driver' => env('SESSION_DRIVER', 'database'),
+    // 'driver' => env('SESSION_DRIVER', 'database'),
 
+    'driver' => env('SESSION_DRIVER', 'cookie'), // Faster than file/database
+    'encrypt' => true,
     /*
     |--------------------------------------------------------------------------
     | Session Lifetime
@@ -129,7 +131,7 @@ return [
 
     'cookie' => env(
         'SESSION_COOKIE',
-        Str::slug(env('APP_NAME', 'laravel'), '_').'_session'
+        Str::slug(env('APP_NAME', 'laravel'), '_') . '_session'
     ),
 
     /*

@@ -10,4 +10,13 @@ export default defineConfig({
         }),
         tailwindcss(),
     ],
+    build: {
+        rollupOptions: {
+            output: {
+                manualChunks: {
+                    'particles': ['particles.js'], // Separate heavy libraries
+                }
+            }
+        }
+    }
 });

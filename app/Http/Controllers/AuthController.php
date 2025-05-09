@@ -17,21 +17,23 @@ class AuthController extends Controller
 
     // Handle login
     public function login(Request $request)
-{
-    $credentials = $request->validate([
-        'email' => 'required|email',
-        'password' => 'required'
-    ]);
+    {
+        $credentials = $request->only('email', 'password');
 
-    if (Auth::attempt($credentials)) {
-        $request->session()->regenerate();
-        return redirect()->route('dashboard');
+        $request->validate([
+            'email' => 'required|email',
+            'password' => 'required'
+        ]);
+
+        if (Auth::attempt($credentials)) {
+            $request->session()->regenerate();
+            return redirect()->intended('dashboard');
+        }
+
+        return back()->withErrors([
+            'email' => 'Invalid credentials.',
+        ])->onlyInput('email');
     }
-
-    return back()->withErrors([
-        'email' => 'Invalid credentials.',
-    ]);
-}
 
     // Handle logout
     public function logout(Request $request)
@@ -39,14 +41,14 @@ class AuthController extends Controller
         Auth::logout();
         $request->session()->invalidate();
         $request->session()->regenerateToken();
+
         return redirect('/');
     }
 
     // Show registration form
     public function showRegisterForm()
     {
-        $roles = Role::all();
-        return view('auth.register', compact('roles'));
+        return view('auth.register', ['roles' => Role::all()]);
     }
 
     // Handle registration
@@ -64,12 +66,10 @@ class AuthController extends Controller
             'email' => $validated['email'],
             'password' => bcrypt($validated['password']),
             'role_id' => $validated['role_id'],
-            'status' => 'active' 
+            'status' => 'active'
         ]);
 
         Auth::login($user);
-        return redirect('/dashboard');
+        return redirect()->route('dashboard');
     }
-
-
 }
